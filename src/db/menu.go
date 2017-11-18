@@ -6,15 +6,15 @@ import (
 	"github.com/satori/go.uuid"
 )
 
-func AddItem(title string, expand bool, level int) {
+func AddTitle(title string, expand bool, level int, parent_id string) {
 
 	u := uuid.NewV4()
 
 	//插入数据
-	stmt, err := db.Prepare("INSERT INTO catalog(id,title,expand,type) VALUES($1,$2,$3,$4) RETURNING id")
+	stmt, err := db.Prepare("INSERT INTO dev.title(id,title,expand,level,parent_id) VALUES($1,$2,$3,$4,$5) RETURNING id")
 	checkErr(err)
 
-	res, err := stmt.Exec(u, title, expand, level)
+	res, err := stmt.Exec(u, title, expand, level, parent_id)
 
 	checkErr(err)
 
@@ -23,6 +23,13 @@ func AddItem(title string, expand bool, level int) {
 
 	fmt.Println("rows affect:", affect)
 }
+
+func FindAllTitle(){
+	rows, err := db.Query("SELECT * FROM dev.title")
+	checkErr(err)
+	fmt.Println(rows)
+}
+
 func SqlDelete() {
 	//删除数据
 	stmt, err := db.Prepare("delete from userinfo where uid=$1")

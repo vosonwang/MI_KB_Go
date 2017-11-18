@@ -12,7 +12,7 @@ const (
 	port     = 32768
 	user     = "postgres"
 	password = "qwe123"
-	dbname   = "postgres"
+	dbname   = "messeinfor_kownledge"
 )
 
 func init() {
